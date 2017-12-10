@@ -22,6 +22,12 @@ by: Kevin Rau
 
 ## Installation Instructions
 
+1. Install dependencies
+$ npm install
+
+2. launch 
+$ npm run dev
+
 ## Architecture Discussion
 
 MEVN
