@@ -25,8 +25,12 @@ by: Kevin Rau
 1. Install dependencies
 $ npm install
 
-2. launch 
+2. launch front end
 $ npm run dev
+
+3. Launch backend
+$ sudo service mongod start
+$ nodemon ./server/index
 
 ## Architecture Discussion
 
