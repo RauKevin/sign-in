@@ -36,9 +36,21 @@ const User = mongoose.model('user', UserSchema);
 // router API
 
 // admin login
-router.post('/adminlogin', function(req, res, next){
+router.post('/adminAuth', function(req, res, next){
     //res.send({type: 'GET'});
-    console.log('Log in request received @'+Date.now);
+    console.log('Log in request received ');
+    console.log(req.body);
+
+    //shortcut - authenticate is hard coded, #badkevin
+    if(req.body.username == 'admin' && req.body.password == '12345')
+    {
+        res.send({'auth':'true'});
+    }
+    else
+    {
+        res.send({'auth':'false'});
+    }
+
     /*
     User.findOne({'email':req.body.email}).then(function(user){
         let log = '';

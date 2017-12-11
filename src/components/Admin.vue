@@ -1,6 +1,17 @@
 <template>
   <div id="container">
     <h3>Administrator Portal</h3>
+    
+    <!--Admin Login-->
+    <div v-if="!this.authenticated">
+      <input type="text" placeholder="User Name" v-model="username"/>
+      <br>
+      <input type="password" placeholder="Password" v-model="password"/>
+      <br>
+      <button @click="Login" >Authenticate</button>
+    </div>
+    <!--Admin Display-->
+    <div v-else>
     <table>
       <tr>
         <th>Name</th>
@@ -21,6 +32,7 @@
 
       </tr>
     </table>
+    </div>
   </div>
 </template>
 
@@ -29,15 +41,41 @@ export default {
   name: 'admin',
   data () {
     return {
+      authenticated: false,
+      username: '',
+      password: '',
       msg: 'Sign in here!',
-      users: []
+      users: [],
+    }
+  },
+  methods: {
+    Login()
+    {
+      alert('Admin log in attempt');
+      this.$http.post('http://localhost:4000/api/adminAuth', {
+        username: this.username,
+        password: this.password
+      }).then((data) => {
+
+        console.log(data.body.auth);
+        if(data.body.auth == 'true')
+        {
+          this.authenticated = true;
+        }
+        
+
+      });
+
+      this.username = '';
+      this.password = '';
+      
+      //set timeout to logot after a certain time? - this.authenticated=false;
     }
   },
   mounted()
   {
-    alert("Admin view!");
+//may want to add this after admin has signed in?
     //get the signed in users
-    //get users
     this.$http.get('http://localhost:4000/api/admin')
         .then((data) => {
           this.users = data.body;
@@ -58,5 +96,10 @@ table, td, th {
 table {
   border-collapse: collapse;
   margin: auto;
+}
+input{
+  display: inline-block;
+  font-size: 1.2em;
+  margin-bottom: 10px;
 }
 </style>
