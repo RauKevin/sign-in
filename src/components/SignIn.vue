@@ -49,9 +49,10 @@ export default {
       console.log(this.user);
 
       //insert user data validation here
-      if(this.validate())
+      if(!this.validate())
       {
-        alert("the data is good!");
+        this.msg = "Error! Please check your entries and try again";
+        return;
       }
       /*      
       this.$http.post('http://localhost:4000/api/signin', this.user)
