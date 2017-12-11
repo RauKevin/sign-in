@@ -13,9 +13,9 @@
       <input type="checkbox" value="office" v-model="user.officeVisit" />
       <label> Official visit: </label>
       <br>
-      <input type="checkbox" value="false" v-model="user.escort" />
+      <input type="checkbox" value="false" v-model="escort" />
       <label> Escort required: </label>
-      <input v-if="user.escort" type="text" placeholder="Escourt Name" v-model="user.escourtName"/>
+      <input v-if="escort" type="text" placeholder="Escourt Name" v-model="user.escortName"/>
       <br>
       <button @click="Signin" >Sign in</button>
 
@@ -29,14 +29,14 @@ export default {
   data () {
     return {
       msg: 'Sign in here!',
+      escort: false,
       user: {
         name: '',
         email: '',
         phone: '',
         company: '',
         officeVisit: false,
-        escort: false,
-        escourtName: ''
+        escortName: ''
       }
     }
   },
@@ -44,8 +44,25 @@ export default {
     Signin()
     {
       console.log(this.user);
-      alert("Hello "+this.user.name + ", Sign in confirmed");
-      location.reload();
+            
+      this.$http.post('http://localhost:4000/api/signin', this.user)
+        .then((data) => {
+          console.log(data.body);
+          if(data.body.status == 'failure')
+          {
+            this.msg = "Welcome " +data.body.email+", Registration successful!";
+            console.log('Error');
+            this.msg = data.body.err;
+          }
+          else{
+            this.msg = "Welcome " +data.body.email+", Registration successful!";
+            alert("Hello "+this.user.name + ", Sign in confirmed");
+            // this.$router.push('/');
+          }
+        });
+
+      //clear form data after sign in  
+      this.refresh(); //make this async to refresh after a set timeout
     },
     refresh()
     {
@@ -55,7 +72,7 @@ export default {
       this.user.company = '';
       this.user.officeVisit = false;
       this.user.escort = false;
-
+      this.user.escourtName = '';
     }
 
   }

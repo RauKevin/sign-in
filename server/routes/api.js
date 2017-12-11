@@ -5,14 +5,30 @@ const Schema = mongoose.Schema;
 
 // create user Schema & model
 const UserSchema = new Schema({
+    name: {
+        type: String,
+        required: [true, 'Name field is required']
+    },
     email: {
         type: String,
         required: [true, 'Email field is required']
     },
-    password: {
+    phone: {
         type: String,
-        required: [true, 'Password field is required']
-    }
+        required: [true, 'Phone number field is required']
+    },
+    company: {
+        type: String,
+        required: [false, 'Company field is optional']
+    },
+    officeVisit: {
+        type: String,
+        required: [true, 'Office visit is required']
+    },
+    escortName: {
+        type: String,
+        required: [false, 'Escort is optional']
+    },
 });
 
 const User = mongoose.model('user', UserSchema);
@@ -46,20 +62,30 @@ router.post('/adminlogin', function(req, res, next){
     */
 });
 
+// admin get users
+router.get('/admin', (req, res) => {
+    User.find({}).then(function(posts){
+      let data = posts.reverse();
+      console.log('Sending', data);
+      res.send(data);
+    })
+});
+
 // sign in
 router.post('/signin', function(req, res, next){
     //check is user email exist
+    console.log("User sign in attempt ", req.body);
     User.findOne({'email':req.body.email}).then(function(user){
         if(user == null)
         {
             User.create(req.body).then(function(user){
                 console.log('User Signed In');
-                res.send(user);
+                res.send({'status':'success'});
             }).catch(next);
         }
         else{
             let s = "user with email: "+ req.body.email +" already exist"; 
-            res.send({err:s});
+            res.send({'status':'failure'});
         }        
     }).catch(next);
 
