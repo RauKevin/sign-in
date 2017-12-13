@@ -42,19 +42,36 @@ The MEVN stack was chosen. Recent experience with MongoDB, Vuejs, nodejs and Exp
 ## Plan of Action
 
 [x] Tooling
+
 [x] Create git repo with readme
+
 [x] Ensure recent copies of nodejs and mongodb are installed
+
 [x] Install vue-cli and initialize a project with webpack
+
 [x] Create client-side
+
   - add vue components for sign-in and admin page
+  
   - establish endpoints for post user and get users
+  
 [x] Create server-side API
+
   - establish connection with mongo DB
+  
   - create Schema for user obj
+  
   - establish endpoints 
+  
 [x] Deploy client and server in localhost and test endpoints
+
 [] Add Additional features
+
   [] Deploy
+  
   [x] Admin login
+  
   [] Admin table pagenation
+  
 [] Document project readme
+
