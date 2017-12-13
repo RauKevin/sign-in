@@ -67,11 +67,11 @@ The MEVN stack was chosen. Recent experience with MongoDB, Vuejs, nodejs and Exp
 
 [] Add Additional features
 
-  [] Deploy
+  - [] Deploy
   
-  [x] Admin login
+  - [x] Admin login
   
-  [] Admin table pagenation
+  - [] Admin table pagenation
   
 [] Document project readme
 
